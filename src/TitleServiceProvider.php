@@ -1,19 +1,19 @@
-<?php namespace Radiula\Title;
+<?php
+
+namespace Radiula\Title;
 
 use Illuminate\Support\ServiceProvider;
 
-class TitleServiceProvider extends ServiceProvider {
-
+class TitleServiceProvider extends ServiceProvider
+{
     /**
      * {@inheritDoc}
      */
     public function boot()
     {
         $this->publishes([
-            __DIR__ . '/config/config.php' => config_path('title.php'),
+            __DIR__.'/config/config.php' => config_path('title.php'),
         ]);
-
-        $this->mergeConfigFrom(__DIR__ . '/config/config.php', 'title');
     }
 
     /**
@@ -21,18 +21,17 @@ class TitleServiceProvider extends ServiceProvider {
      */
     public function register()
     {
+        $this->mergeConfigFrom(__DIR__.'/config/config.php', 'title');
+
         $this->bindRepositories();
     }
 
     /**
-     * Bind Repositories
-     *
-     * @return void
+     * Bind Repositories.
      */
     protected function bindRepositories()
     {
-        $this->app->bind('Title', function ($app)
-        {
+        $this->app->bind('Title', function ($app) {
             return new Models\Title($app['config']);
         });
     }
@@ -48,5 +47,4 @@ class TitleServiceProvider extends ServiceProvider {
             'radiula.make',
         ];
     }
-
 }
